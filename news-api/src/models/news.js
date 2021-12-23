@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-// const validator = require('validator')
+
+const time = {
+    timestamps: {currentTime: () => new Date().setHours(new Date().getHours() + 2)}
+}
 
 const newsSchema = mongoose.Schema ({
     title: {
@@ -12,15 +15,6 @@ const newsSchema = mongoose.Schema ({
         trim: true,
         required: true
     },
-    // created_at: {
-    //     type: Date,
-    //     default: Date.now
-    // },
-    // date: {
-    //     type: String,
-    //     trim: true,
-    //     required: true
-    // },
     image: {
         type: Buffer
     },
@@ -30,7 +24,7 @@ const newsSchema = mongoose.Schema ({
         ref: 'Reporter',
     },
 },
-{timestamps: true}
+time
 )
 
 const News = mongoose.model('News', newsSchema)
