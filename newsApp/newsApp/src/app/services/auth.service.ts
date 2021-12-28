@@ -13,4 +13,12 @@ export class AuthService {
     return this.http.post(this.url+"reporter", credential)
   }
 
+  login(credentials: any) {
+    return this.http.post(this.url+'login', credentials)
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
 }
