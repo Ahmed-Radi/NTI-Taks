@@ -12,7 +12,7 @@ router.post('/news', auth, async (req, res) => {
         await news.save()
         res.status(200).send(news)
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -24,7 +24,7 @@ router.get('/news', auth,async (req, res) => {
         await req.reporter.populate('news')
         res.status(200).send(req.reporter.news)
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -35,11 +35,11 @@ router.get('/news/:id', auth, async (req, res) => {
         const _id = req.params.id
         const news = await News.findOne({_id, reporter: req.reporter._id})
         if (!news) {
-            return res.status(404).send('Task Not Found')
+            return res.status(404).send() // 'Task Not Found'
         }
         res.status(200).send(news)
     } catch (err) {
-        res.status(500).send(err.message)
+        res.status(500).send(err)
     }
 })
 
@@ -51,7 +51,7 @@ router.patch('/news/:id', auth, async (req, res) => {
     const valid = updates.every(update => allowToUpdate.includes(update))
 
     if (!valid) {
-        return res.status(400).send("Can't Update")
+        return res.status(400).send() //"Can't Update"
     }
 
     try {
@@ -59,13 +59,14 @@ router.patch('/news/:id', auth, async (req, res) => {
         // const news = await News.findById(_id)
         const news = await News.findOne({_id, reporter: req.reporter._id})
         if (!news) {
-            return res.status(404).send("News Not found 404 !!")
+            return res.status(404).send() // "News Not found 404 !!"
         }
         updates.forEach(el => news[el] = req.body[el])
         // await news.save() // it work without save()
+        await news.save()
         res.status(200).send(news)
     } catch (err) {
-        res.status(500).send(err.message)
+        res.status(500).send(err)
     }
 })
 
@@ -76,11 +77,11 @@ router.delete('/news/:id', auth, async (req, res) => {
         const _id = req.params.id
         const news = await News.findOneAndDelete({_id, reporter: req.reporter._id})
         if (!news) {
-            return res.status(404).send('News Not found to Delete!!')
+            return res.status(404).send() // 'News Not found to Delete!!'
         }
         res.status(200).send(news)
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -99,21 +100,22 @@ const uploads = multer({
 })
 
 router.post('/image/:id', auth, uploads.single('image'), async (req, res) => {
-    try {
+    try{
         const _id = req.params.id
         const news = await News.findById(_id)
-        console.log(news)
-        if (!news) {
-            return res.status(404).send('News Not found 404')
+        if(!news){
+            return res.status(404).send()
         }
-        console.log(req.file.buffer)
+
         news.image = req.file.buffer
         await news.save()
-        res.status(200).send('Image Uploaded')
-    } catch (error) {
-        res.status(500).send(error.message)
+        res.status(200).send(news)
+    }
+    catch(e) {
+        res.status(400).send(e)
     }
 })
+
 
 
 module.exports = router

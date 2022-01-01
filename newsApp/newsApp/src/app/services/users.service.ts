@@ -12,4 +12,12 @@ export class UsersService {
   profile () {
     return this.http.get(this.url + 'profile')
   }
+
+  getToken() {
+    return localStorage.getItem('token')
+  }
+
+  logout () {
+    return this.http.delete(this.url + 'logout')
+  }
 }

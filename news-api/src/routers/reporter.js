@@ -12,7 +12,7 @@ router.post('/reporter', async (req, res) => {
         const token = await reporter.generateToken()
         res.status(200).send({reporter,token})
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -23,7 +23,7 @@ router.get('/reporter', auth, async (req, res) => {
         const reporter = await Reporter.find({})
         res.status(200).send(reporter)
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -38,7 +38,7 @@ router.get('/reporter/:id', auth, async (req, res) => {
         }
         res.status(200).send(reporter)
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -62,7 +62,7 @@ router.patch('/reporter/:id', auth, async (req, res) => {
         await reporter.save()
         res.status(200).send(reporter)
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -76,7 +76,7 @@ router.delete('/reporter/:id', auth, async (req, res) => {
         }
         res.status(200).send(reporter)
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -86,9 +86,10 @@ router.post('/login', async (req, res) => {
     try {
         const reporter = await Reporter.findByCredential(req.body.email, req.body.password)
         const token = await reporter.generateToken()
+        console.log(token)
         res.status(200).send({reporter,token})
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -100,9 +101,9 @@ router.delete('/logout', auth, async (req, res) => {
             return token !== req.token
         })
         await req.reporter.save()
-        res.status(200).send('logout !!')
+        res.status(200).send()
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -114,7 +115,7 @@ router.delete('/logoutall', auth, async (req, res) => {
         await req.reporter.save()
         res.status(200).send('logout all')
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 })
 
@@ -146,7 +147,7 @@ router.post('/profile/avatar', auth, uploads.single('avatar'), async (req, res) 
         res.status(200).send('image uploaded')
     } catch (e) {
         console.log('ssssssssssssssssssssssssssss')
-        res.status(500).send(e.message)
+        res.status(500).send(e)
     }
 
 })

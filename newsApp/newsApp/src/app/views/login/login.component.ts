@@ -15,10 +15,11 @@ export class LoginComponent implements OnInit {
   Login (credentials:any) {
     this.authService.login(credentials).subscribe({
       next: (res:any) => {
-        console.log(res)
+        // console.log(res)
         this.router.navigateByUrl('/profile')
-        localStorage.setItem('token', res.toke)
-        this.invalidEmailOrPassword = false
+        console.log(res.token)
+        localStorage.setItem('token',res.token)
+        // this.invalidEmailOrPassword = false
       }, error: (httpError:any) => {
         this.invalidEmailOrPassword = true
         console.log(httpError)

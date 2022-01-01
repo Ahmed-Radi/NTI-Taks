@@ -1,3 +1,4 @@
+import { UsersService } from 'src/app/services/users.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,8 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private usersService:UsersService) { }
 
+  get getToken () {
+    let token = this.usersService.getToken()
+    if(token) {
+      return true
+    }
+    return false
+  }
+
+  logout () {
+    this.usersService.logout().subscribe({
+      next:() => {
+        localStorage.removeItem('token')
+      }
+    })
+  }
   ngOnInit(): void {
   }
 

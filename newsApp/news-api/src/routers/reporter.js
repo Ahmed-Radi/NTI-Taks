@@ -86,6 +86,7 @@ router.post('/login', async (req, res) => {
     try {
         const reporter = await Reporter.findByCredential(req.body.email, req.body.password)
         const token = await reporter.generateToken()
+        console.log(token)
         res.status(200).send({reporter,token})
     } catch (error) {
         res.status(500).send(error)
@@ -100,7 +101,7 @@ router.delete('/logout', auth, async (req, res) => {
             return token !== req.token
         })
         await req.reporter.save()
-        res.status(200).send('logout !!')
+        res.status(200).send()
     } catch (error) {
         res.status(500).send(error)
     }
