@@ -14,7 +14,7 @@
           name="username"
           placeholder="Enter your name"
         />
-        <div *ngIf="userName.touched && userName.invalid">
+        <div class="error" *ngIf="userName.touched && userName.invalid">
           <div *ngIf="userName.errors?.['required']">
             please Enter user name
           </div>
