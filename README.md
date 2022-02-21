@@ -1,9 +1,8 @@
 # NTI-Taks
 
-###### Student-app & note-app
-
-Main repo link: https://github.com/Ahmed-Radi/NTI/tree/main/day03/task
-
-###### news-app
-
-Main repo link: https://github.com/Ahmed-Radi/NTI/tree/main/day05/Task
+##### News Api: It is a API cerated using ```Node.js```
+##### News App: It is a project using ```Template```
+##### NewsApp: It is a project using ```Angular and Node.js```
+##### Note App: It is a project using ```Argv```
+##### Student App: It is a project using ```Argv```
+##### UserInfo: It is a project using ```Angular```
